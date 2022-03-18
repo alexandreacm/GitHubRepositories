@@ -1,11 +1,11 @@
 import React, { useReducer, useEffect } from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, FlatList } from 'react-native';
+import { StyleSheet, View, FlatList } from 'react-native';
 
-import { LinearGradient } from 'expo-linear-gradient';
 
 import ListItem from './src/components/ListItem';
 import Loading from './src/components/Loading';
+import HeaderGradient from './src/components/HeaderGradient';
 
 import { colors } from './src/config';
 
@@ -60,34 +60,30 @@ export default function App() {
     initialState
   );
 
-  console.log(page);
-
-  const headerGradient = () => (
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
-      <LinearGradient style={styles.header} colors={colors.GRADIENT_COLOR}>
-        <Text style={styles.headerText}>
-          Total repositories: {total && total}
-        </Text>
-        <Text style={styles.headerText}>
-          Total perPage: {page !== 1 && page}
-        </Text>
-      </LinearGradient>
-    </View>
-  );
 
   useEffect(() => {
-    loadRepositories();
+    (async () => {
+      loadRepositories();
+    })();
   }, []);
 
   async function loadRepositories() {
     try {
+
+      const headerOptions =   {
+        method: 'GET',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json'
+        }
+      }
+
       if (loading) return;
 
       dispatch({ type: 'fetchDataStart' });
 
       const response = await fetch(
-        `${baseUrl}/search/repositories?q=React&per_page=${perPage}&page=${page}`
-      );
+        `${baseUrl}/search/repositories?q=React&per_page=${perPage}&page=${page}`, headerOptions);
 
       const { items, total_count } = await response.json();
 
@@ -106,7 +102,7 @@ export default function App() {
     <View style={styles.container}>
       <StatusBar style='light' backgroundColor={colors.statusBarColor} />
 
-      {headerGradient()}
+      <HeaderGradient total={ total } page={ page } />
 
       <FlatList
         style={{ marginTop: 30 }}
@@ -126,19 +122,5 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: colors.BG
-  },
-  header: {
-    width: '95%',
-    height: 70,
-    backgroundColor: colors.HEADER,
-    opacity: 0.8,
-    marginTop: 30,
-    borderRadius: 8
-  },
-  headerText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: '#FFF',
-    textAlign: 'justify'
   }
 });

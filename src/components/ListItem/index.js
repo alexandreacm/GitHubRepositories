@@ -1,15 +1,13 @@
 import React from 'react';
-import { StyleSheet, Text } from 'react-native';
-
-import { LinearGradient } from 'expo-linear-gradient';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { colors } from '../../config';
 
 export default function ListItem({ data: { full_name } }) {
   return (
-    <LinearGradient style={styles.listItem} colors={colors.GRADIENT_COLOR}>
+    <View style={styles.listItem}>
       <Text style={styles.listText}>{full_name}</Text>
-    </LinearGradient>
+    </View>
   );
 }
 
