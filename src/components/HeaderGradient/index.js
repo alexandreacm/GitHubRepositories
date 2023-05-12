@@ -6,7 +6,7 @@ import { colors } from '../../config';
 
 export default function HeaderGradient({ total, page }) {
   return (
-    <View style={{ justifyContent: 'center', alignItems: 'center' }}>
+    <View style={{ fle: 1, padding: 10, justifyContent: 'center', alignItems: 'center' }}>
       <LinearGradient style={styles.header} colors={colors.GRADIENT_COLOR}>
         <Text style={styles.headerText}>
           Total repositories: {total && total}
@@ -21,8 +21,9 @@ export default function HeaderGradient({ total, page }) {
 
 const styles = StyleSheet.create({
   header: {
-    width: '95%',
+    width: '100%',
     height: 70,
+    padding: 12,
     backgroundColor: colors.HEADER,
     opacity: 0.8,
     marginTop: Platform.OS === 'ios' ? 50 : 30,

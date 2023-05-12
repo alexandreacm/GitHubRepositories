@@ -103,7 +103,7 @@ export default function App() {
       <HeaderGradient total={ total } page={ page } />
 
       <FlatList
-        style={{ marginTop: 30 }}
+        style={{ marginTop: 10 }}
         contentContainerStyle={{ marginHorizontal: 10 }}
         data={data}
         keyExtractor={item => String(item.id)}
