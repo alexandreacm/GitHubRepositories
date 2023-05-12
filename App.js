@@ -62,9 +62,7 @@ export default function App() {
 
 
   useEffect(() => {
-    (async () => {
-      loadRepositories();
-    })();
+    loadRepositories();
   }, []);
 
   async function loadRepositories() {
